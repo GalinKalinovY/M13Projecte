@@ -13,6 +13,22 @@ public class Podcast implements Serializable{
 	private String descripcio;
 	private float preu;
 	private String imatge;
+	
+
+	public Podcast() {
+		super();
+	}
+
+	public Podcast(int id, String format, String nom, String descripcio, float preu, String imatge) {
+		super();
+		this.id = id;
+		this.format = format;
+		this.nom = nom;
+		this.descripcio = descripcio;
+		this.preu = preu;
+		this.imatge = imatge;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -50,6 +66,8 @@ public class Podcast implements Serializable{
 		this.imatge = imatge;
 	}
 	
-	
+	public void transmetreEnViu() {
+		
+	}
 	
 }

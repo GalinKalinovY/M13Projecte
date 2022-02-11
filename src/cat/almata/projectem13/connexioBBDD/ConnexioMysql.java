@@ -1,29 +1,43 @@
 package cat.almata.projectem13.connexioBBDD;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import cat.almata.projectem13.classes.Podcast;
 
 public class ConnexioMysql {
 	public List<Podcast> consultaPodcasts(Connection con) throws SQLException {
-		PreparedStatement stmt = con.prepareStatement("SELECT * FROM BOOK LIMIT 6");
+		PreparedStatement stmt = con.prepareStatement("SELECT * FROM Podcast LIMIT 6");
+
+		List<Podcast> llistaPodcasts = new ArrayList<Podcast>();
 
 		ResultSet rs = stmt.executeQuery();
 		while (rs.next()) {
-			System.out.println("IDBN: " + rs.getString("ISBN"));
-			System.out.println("BookName: " + rs.getString("BOOK_NAME"));
-			System.out.println("Publisher Code: " + rs.getString("PUBLISHER_CODE"));
-			System.out.println("Publisher Date: " + rs.getDate("PUBLISH_DATE"));
-			System.out.println("Price: " + rs.getInt("PRICE"));
+			Podcast pod  =  new Podcast();
+			pod.setId(rs.getInt("ID"));
+			pod.setFormat(rs.getString("format"));
+			pod.setNom(rs.getString("nomProducte"));
+			pod.setDescripcio(rs.getString("descripcio"));
+			pod.setPreu(rs.getFloat("preu"));
+			pod.setImatge(rs.getString("imatgeProducte"));
+			
+			System.out.println("ID: " + rs.getInt("ID"));
+			System.out.println("format: " + rs.getString("format"));
+			System.out.println("nomProducte: " + rs.getString("nomProducte"));
+			System.out.println("descripcio: " + rs.getString("descripcio"));
+			System.out.println("preu: " + rs.getFloat("preu"));
+			System.out.println("imatgeProducte: " + rs.getString("imatgeProducte"));
 			System.out.println();
+			
+			llistaPodcasts.add(pod);
 		}
 		rs.close();
 		stmt.close();
 		
-		//List<Podcast> pod = 
 		
-		return null;
+		
+		return llistaPodcasts;
 	}
 }
 //prova connexió a bbdd a dins de la classe java que te la pantalla.

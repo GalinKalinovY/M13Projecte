@@ -1,5 +1,6 @@
 package projecteM13AppEscriptori;
 
+import cat.almata.projectem13.classes.Podcast;
 import cat.almata.projectem13.connexioBBDD.*;
 
 import java.awt.EventQueue;
@@ -24,6 +25,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -78,13 +81,16 @@ public class LlistaPodcasts extends ConnexioMysql{
 	 */
 	private void initialize() throws ClassNotFoundException {
 		
-		 try {
+		List<Podcast> podcasts = new ArrayList<Podcast>();
+		 
+		try {
 			 Class.forName("com.mysql.cj.jdbc.Driver");
              Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/M13Projecte",
                  "root", "galin");
              System.out.println("Conectant...");
 
-             consultaPodcasts(connection);
+             podcasts =consultaPodcasts(connection);
+             System.out.println(podcasts.get(0).getNom());
            
          } catch (SQLException sqlException) {
              sqlException.printStackTrace();
@@ -186,6 +192,12 @@ public class LlistaPodcasts extends ConnexioMysql{
 		lblLlista_1.setBounds(516, 86, 294, 248);
 		panelCos.add(lblLlista_1);
 		
+		JLabel lblNomPodcast = new JLabel(podcasts.get(0).getNom());
+		lblNomPodcast.setForeground(Color.WHITE);
+		lblNomPodcast.setBounds(173, 356, 231, 15);
+		panelCos.add(lblNomPodcast);
+		
+		
 		
 		
 		JLabel lblCosPagina = new JLabel("");
@@ -193,6 +205,8 @@ public class LlistaPodcasts extends ConnexioMysql{
 		lblCosPagina.setBackground(new Color(0, 204, 204));
 		lblCosPagina.setBounds(-100, -300, 1920, 1080);
 		panelCos.add(lblCosPagina);
+		
+	
 		
 		frame.setBounds(300, 100, 1920, 1080);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
