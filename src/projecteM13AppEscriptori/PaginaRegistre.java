@@ -35,7 +35,7 @@ public class PaginaRegistre {
 	private JFrame frame;
 	private JTextField txbNom;
 	private JTextField txtContrassenya;
-	private JTextField txtRepetirContrassenya;
+	private JTextField txtContrassenya2;
 	private JTextField txtAnyNaixement;
 	private JTextField txtAdrea;
 	private JTextField txtCognoms;
@@ -167,7 +167,6 @@ public class PaginaRegistre {
 		lblMissatge.setVisible(false);
 
 		txbNom = new JTextField();
-		txbNom.setText("Nom");
 		txbNom.setToolTipText("Nom");
 		txbNom.setBounds(537, 277, 200, 39);
 		panelCos.add(txbNom);
@@ -179,12 +178,11 @@ public class PaginaRegistre {
 		txtContrassenya.setBounds(537, 350, 200, 39);
 		panelCos.add(txtContrassenya);
 
-		txtRepetirContrassenya = new JTextField();
-		txtRepetirContrassenya.setText("Repetir contrassenya");
-		txtRepetirContrassenya.setToolTipText("Nom");
-		txtRepetirContrassenya.setColumns(10);
-		txtRepetirContrassenya.setBounds(537, 423, 200, 39);
-		panelCos.add(txtRepetirContrassenya);
+		txtContrassenya2 = new JTextField();
+		txtContrassenya2.setToolTipText("Nom");
+		txtContrassenya2.setColumns(10);
+		txtContrassenya2.setBounds(537, 423, 200, 39);
+		panelCos.add(txtContrassenya2);
 
 		txtAnyNaixement = new JTextField();
 		txtAnyNaixement.setText("00/00/000");
@@ -194,41 +192,34 @@ public class PaginaRegistre {
 		panelCos.add(txtAnyNaixement);
 
 		txtAdrea = new JTextField();
-		txtAdrea.setText("Adreça");
 		txtAdrea.setToolTipText("Nom");
 		txtAdrea.setColumns(10);
 		txtAdrea.setBounds(537, 581, 200, 39);
 		panelCos.add(txtAdrea);
 
-
 		txtCognoms = new JTextField();
-		txtCognoms.setText("Cognoms");
 		txtCognoms.setToolTipText("Nom");
 		txtCognoms.setColumns(10);
 		txtCognoms.setBounds(1058, 277, 200, 39);
 		panelCos.add(txtCognoms);
 
 		txtDniniecif = new JTextField();
-		txtDniniecif.setText("12345678Z");
 		txtDniniecif.setToolTipText("Nom");
 		txtDniniecif.setColumns(10);
 		txtDniniecif.setBounds(1058, 350, 200, 39);
 		panelCos.add(txtDniniecif);
 
 		txtTelefon = new JTextField();
-		txtTelefon.setText("000000000");
 		txtTelefon.setToolTipText("telefon");
 		txtTelefon.setColumns(10);
 		txtTelefon.setBounds(1058, 423, 200, 39);
 		panelCos.add(txtTelefon);
 
 		txtInfoAdicional = new JTextField();
-		txtInfoAdicional.setText("Info adicional");
 		txtInfoAdicional.setToolTipText("info");
 		txtInfoAdicional.setColumns(10);
 		txtInfoAdicional.setBounds(1058, 501, 200, 119);
 		panelCos.add(txtInfoAdicional);
-
 
 		JButton btnRegistre = new JButton("Registre");
 		btnRegistre.setForeground(Color.CYAN);
@@ -299,58 +290,63 @@ public class PaginaRegistre {
 			usuari.setNomUsuari(txbNom.getText());
 			usuariComplet = true;
 		} else {
-			lblMissatge.setText("Error al insertar l'usuari");
+			lblMissatge.setText("Revisa el nom");
 			lblMissatge.setVisible(true);
+			usuariComplet = false;
 		}
 
 		// comprovació per la contrassenya
 		if (txtContrassenya.getText() != null && !txtContrassenya.getText().trim().isEmpty()
-				&& txtContrassenya.getText().length() < 8) {
+				&& txtContrassenya.getText().length() > 8) {
 			usuari.setContrasenyaUsuari(txtContrassenya.getText());
 			usuariComplet = true;
-			return "usuariValid";
 		} else {
-			lblMissatge.setText("Error al insertar l'usuari, revisa la contrassenya");
+			lblMissatge.setText("Revisa la contrassenya");
 			lblMissatge.setVisible(true);
-			return null;
+			usuariComplet = false;
 		}
-//		// agafem el text del formulari
-//		if (txtRepetirContrassenya.getText() != null || txtRepetirContrassenya.getText() != "") {
-//			usuaris.setContrasenyaUsuari2(txtRepetirContrassenya.getText());
-//			usuariComplet = true;
-//		} else {
-//			lblMissatge.setText("Error al insertar l'usuari");
-//			lblMissatge.setVisible(true);
-//		}
-//		// agafem el text del formulari
-//		try {
-//			if (txtAnyNaixement.getText() != null || txtAnyNaixement.getText() != "") {
-//				Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(txtAnyNaixement.getText());
-//				usuaris.setAnyNaixement(date1);
-//				usuariComplet = true;
-//			} else {
-//				lblMissatge.setText("Error al insertar l'usuari");
-//				lblMissatge.setVisible(true);
-//			}
-//		} catch (ParseException e1) {
-//			e1.printStackTrace();
-//		}
+		// comprovació per la contrassenya
+		if (txtContrassenya2.getText() != null && !txtContrassenya2.getText().trim().isEmpty()
+				&& txtContrassenya2.getText().length() > 8) {
+			usuari.setContrasenyaUsuari2(txtContrassenya2.getText());
+			usuariComplet = true;
+		} else {
+			lblMissatge.setText("Revisa la contrassenya repetida");
+			lblMissatge.setVisible(true);
+			usuariComplet = false;
+		}
+
+		try {
+			if (txtAnyNaixement.getText() != null && !txtContrassenya2.getText().trim().isEmpty()) {
+				Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(txtAnyNaixement.getText());
+				usuari.setAnyNaixement(date1);
+				usuariComplet = true;
+			} else {
+				lblMissatge.setText("Revisa la data de naixement");
+				lblMissatge.setVisible(true);
+				usuariComplet = false;
+			}
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+		
+		if (txtAdrea.getText() != null && !txtAdrea.getText().trim().isEmpty()) {
+			usuari.setAdreca(txtAdrea.getText());
+			usuariComplet = true;
+		} else {
+			lblMissatge.setText("Revisa la adreça");
+			lblMissatge.setVisible(true);
+			usuariComplet = false;
+		}
 		// agafem el text del formulari
-//		if (txtAdrea.getText() != null || txtAdrea.getText() != "") {
-//			usuaris.setAdreca(txtAdrea.getText());
-//			usuariComplet = true;
-//		} else {
-//			lblMissatge.setText("Error al insertar l'usuari");
-//			lblMissatge.setVisible(true);
-//		}
-		// agafem el text del formulari
-//		if (txtCognoms.getText() != null || txtCognoms.getText() != "") {
-//			usuaris.setCognomsUsuari(txtCognoms.getText());
-//			usuariComplet = true;
-//		} else {
-//			lblMissatge.setText("Error al insertar l'usuari");
-//			lblMissatge.setVisible(true);
-//		}
+		if (txtCognoms.getText() != null && !txtCognoms.getText().trim().isEmpty()) {
+			usuari.setCognomsUsuari(txtCognoms.getText());
+			usuariComplet = true;
+		} else {
+			lblMissatge.setText("Revisa la adreça");
+			lblMissatge.setVisible(true);
+			usuariComplet = false;
+		}
 		// agafem el text del formulari
 //		if (txtDniniecif.getText() != null || txtDniniecif.getText() != "") {
 //			usuaris.setNIF(txtDniniecif.getText());
@@ -376,6 +372,13 @@ public class PaginaRegistre {
 //			lblMissatge.setText("Error al insertar l'usuari");
 //			lblMissatge.setVisible(true);
 //		}
+		
+		//si hem validat l'usuari i es valid retornem el missatge de que ho es, sino retornem un null.
+		if(usuariComplet==true) {
+			return "usuariValid"; 
+		}else {
+			return null;
+		}
 
 	}
 
