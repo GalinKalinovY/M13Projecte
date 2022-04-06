@@ -118,7 +118,7 @@ public class PaginaRegistre {
 				frame = new JFrame("LLista Podcasts");
 				frame.setVisible(true);
 				frame.setBounds(300, 100, 800, 800);
-
+				frame.dispose();
 			}
 		});
 
@@ -132,7 +132,7 @@ public class PaginaRegistre {
 				frame = new JFrame("Els meus Podcasts");
 				frame.setVisible(true);
 				frame.setBounds(300, 100, 800, 800);
-
+				frame.dispose();
 			}
 		});
 
@@ -146,7 +146,7 @@ public class PaginaRegistre {
 				frame = new JFrame("Retransmissió Podcast");
 				frame.setVisible(true);
 				frame.setBounds(300, 100, 800, 800);
-
+				frame.dispose();
 			}
 		});
 
