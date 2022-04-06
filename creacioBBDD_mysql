@@ -1,0 +1,52 @@
+USE DATABASE M13Projecte;
+
+
+CREATE TABLE LListaPodcasts (
+	id INT NOT NULL AUTO_INCREMENT,
+	nomProducte VARCHAR(30) NOT NULL,
+	Preu FLOAT,
+	imatgePodcast VARCHAR(255),
+	temaPodcast VARCHAR(30),
+	PRIMARY KEY(id)	
+) ENGINE = INNODB;
+
+CREATE TABLE Podcast (
+	id INT NOT NULL AUTO_INCREMENT,
+	format VARCHAR(5),
+	nomProducte VARCHAR(20) NOT NULL,
+	descripcio VARCHAR(40) NOT NULL,
+	preu FLOAT NOT NULL,
+	imatgeProducte VARCHAR(40),
+	PRIMARY KEY (id),
+	FOREIGN KEY (id) REFERENCES LListaPodcasts(id) ON DELETE CASCADE
+) ENGINE = INNODB;
+
+CREATE TABLE Pagament (
+	idPagament INT NOT NULL AUTO_INCREMENT,
+	idUsuari INT NOT NULL,
+	tipusPagament VARCHAR(20) NOT NULL,
+	importTotal INT,
+	codiPromocio VARCHAR(50),
+	PRIMARY KEY(idCistella),
+	FOREIGN KEY (idUsuari) REFERENCES Usuaris(idUsuari) ON DELETE CASCADE	
+) ENGINE = INNODB;
+
+CREATE TABLE Cistella (
+	idCistella INT NOT NULL AUTO_INCREMENT,
+	preu FLOAT,
+	quantitat INT,
+	PRIMARY KEY(idCistella)
+) ENGINE = INNODB;
+
+CREATE TABLE Usuaris (
+	idUsuari INT NOT NULL AUTO_INCREMENT,
+	nomUsuari VARCHAR(10) NOT NULL,
+	cognomsUsuari VARCHAR(20) NOT NULL,
+	contrasenyaUsuari VARCHAR(30) NOT NULL,
+	NIF VARCHAR(9) NOT NULL,
+	telefon INT,
+	anyNaixement DATE,
+	adreca VARCHAR(30),
+	infoAdicional VARCHAR(50),
+	PRIMARY KEY (idUsuari)
+) ENGINE = INNODB;

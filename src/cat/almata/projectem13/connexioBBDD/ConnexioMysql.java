@@ -4,12 +4,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import cat.almata.projectem13.classes.LlistaPodcasts;
 import cat.almata.projectem13.classes.Podcast;
 import cat.almata.projectem13.classes.Usuaris;
 
 public class ConnexioMysql {
-	public List<Podcast> consultaPodcasts(Connection con) throws SQLException {
-		PreparedStatement stmt = con.prepareStatement("SELECT * FROM Podcast LIMIT 6");
+	public List<Podcast> consultaPodcast(Connection con) throws SQLException {
+		PreparedStatement stmt = con.prepareStatement("SELECT * FROM Podcast where id=?");
 
 		List<Podcast> llistaPodcasts = new ArrayList<Podcast>();
 
@@ -30,6 +31,37 @@ public class ConnexioMysql {
 			System.out.println("preu: " + rs.getFloat("preu"));
 			System.out.println("imatgeProducte: " + rs.getString("imatgeProducte"));
 			System.out.println();
+			
+			llistaPodcasts.add(pod);
+		}
+		rs.close();
+		stmt.close();
+		
+		
+		
+		return llistaPodcasts;
+	}
+	public List<LlistaPodcasts> consultaPodcasts(Connection con) throws SQLException {
+		PreparedStatement stmt = con.prepareStatement("SELECT * FROM LListaPodcasts LIMIT 8");
+
+		List<LlistaPodcasts> llistaPodcasts = new ArrayList<LlistaPodcasts>();
+
+		ResultSet rs = stmt.executeQuery();
+		while (rs.next()) {
+			LlistaPodcasts pod  =  new LlistaPodcasts();
+			pod.setId(rs.getInt("ID"));
+			pod.setNom(rs.getString("nomProducte"));
+			pod.setPreu(rs.getFloat("preu"));
+			pod.setImatge(rs.getString("imatgePodcast"));
+			pod.setTemaPodcast(rs.getString("temaPodcast"));
+			
+			System.out.println("-------------------------------------------------------------------------------------------");
+			System.out.println("ID: " + rs.getInt("ID"));
+			System.out.println("nomProducte: " + rs.getString("nomProducte"));
+			System.out.println("preu: " + rs.getFloat("preu"));
+			System.out.println("imatgePodcast: " + rs.getString("imatgePodcast"));
+			System.out.println("temaPodcast: " + rs.getString("temaPodcast"));
+			System.out.println("-------------------------------------------------------------------------------------------");
 			
 			llistaPodcasts.add(pod);
 		}

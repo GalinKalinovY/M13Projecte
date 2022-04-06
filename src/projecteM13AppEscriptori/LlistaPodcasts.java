@@ -1,6 +1,6 @@
 package projecteM13AppEscriptori;
 
-import cat.almata.projectem13.classes.Podcast;
+import cat.almata.projectem13.classes.*;
 import cat.almata.projectem13.connexioBBDD.*;
 
 import java.awt.EventQueue;
@@ -83,7 +83,7 @@ public class LlistaPodcasts extends ConnexioMysql {
 	 */
 	private void initialize() throws ClassNotFoundException {
 
-		List<Podcast> podcasts = new ArrayList<Podcast>();
+		List<cat.almata.projectem13.classes.LlistaPodcasts> podcasts = new ArrayList<cat.almata.projectem13.classes.LlistaPodcasts>();
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -174,16 +174,39 @@ public class LlistaPodcasts extends ConnexioMysql {
 		panelCos.setBackground(Color.DARK_GRAY);
 
 		frame.getContentPane().add(panelCos, BorderLayout.CENTER);
-
+		
+		/***********PODCAST 1**************/
 		JLabel lblLlista = new JLabel("");
 		lblLlista = new JLabel("",
 				new ImageIcon(
-						MenuPpal.class.getResource("/imatgesPerPantalles/imatgesLlistaPodcasts/imatgePodcast1.jpg")),
+						MenuPpal.class.getResource(podcasts.get(0).getImatge())),
 				SwingConstants.CENTER);
 		lblLlista.setBackground(new Color(0, 204, 204));
 		lblLlista.setBounds(149, 72, 294, 248);
 		panelCos.add(lblLlista);
 
+				
+				JPanel panelInfo = new JPanel();
+				panelInfo.setLayout(null);
+				panelInfo.setSize(1000,1000);
+				panelInfo.setBackground(new Color(51, 51, 255));
+				panelInfo.setBounds(149, 319, 294, 102);
+				panelCos.add(panelInfo);
+		
+				JLabel lblNomPodcast = new JLabel(podcasts.get(0).getNom());
+				panelInfo.add(lblNomPodcast);
+				lblNomPodcast.setForeground(Color.BLACK);
+		
+		JLabel lblTemaPodcast = new JLabel(podcasts.get(0).getTemaPodcast());
+		panelInfo.add(lblTemaPodcast);
+		lblTemaPodcast.setForeground(Color.WHITE);
+		
+		JLabel lblPreuPodcast = new JLabel(String.valueOf(podcasts.get(0).getPreu()));
+		panelInfo.add(lblPreuPodcast);
+		lblPreuPodcast.setForeground(Color.WHITE);
+		
+		/***********PODCAST 2**************/
+		
 		JLabel lblLlista_1 = new JLabel("");
 		lblLlista = new JLabel("",
 				new ImageIcon(
@@ -193,12 +216,9 @@ public class LlistaPodcasts extends ConnexioMysql {
 		lblLlista_1.setBounds(516, 86, 294, 248);
 		panelCos.add(lblLlista_1);
 
-		JLabel lblNomPodcast = new JLabel(podcasts.get(0).getNom());
-		lblNomPodcast.setForeground(Color.WHITE);
-		lblNomPodcast.setBounds(173, 356, 231, 15);
-		panelCos.add(lblNomPodcast);
-
+		/***********COS PAGINA**************/
 		JLabel lblCosPagina = new JLabel("");
+		
 		lblCosPagina = new JLabel("",
 				new ImageIcon(MenuPpal.class.getResource("/imatgesPerPantalles/imatgesApp/BG_Llista_Podcasts.jpg")),
 				SwingConstants.CENTER);
