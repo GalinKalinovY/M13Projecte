@@ -11,7 +11,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Graphics;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -46,6 +49,8 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import java.awt.SystemColor;
 import javax.swing.table.DefaultTableModel;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 public class LlistaPodcasts extends ConnexioMysql {
 
@@ -92,7 +97,6 @@ public class LlistaPodcasts extends ConnexioMysql {
 			System.out.println("Conectant...");
 
 			podcasts = consultaPodcasts(connection);
-			System.out.println(podcasts.get(0).getNom());
 
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
@@ -174,51 +178,87 @@ public class LlistaPodcasts extends ConnexioMysql {
 		panelCos.setBackground(Color.DARK_GRAY);
 
 		frame.getContentPane().add(panelCos, BorderLayout.CENTER);
-		
-		/***********PODCAST 1**************/
+
+		/*********** PODCAST 1 **************/
 		JLabel lblLlista = new JLabel("");
-		lblLlista = new JLabel("",
-				new ImageIcon(
-						MenuPpal.class.getResource(podcasts.get(0).getImatge())),
+		lblLlista = new JLabel("", new ImageIcon(MenuPpal.class.getResource(podcasts.get(0).getImatge())),
 				SwingConstants.CENTER);
 		lblLlista.setBackground(new Color(0, 204, 204));
 		lblLlista.setBounds(149, 72, 294, 248);
 		panelCos.add(lblLlista);
 
-				
-				JPanel panelInfo = new JPanel();
-				panelInfo.setLayout(null);
-				panelInfo.setSize(1000,1000);
-				panelInfo.setBackground(new Color(51, 51, 255));
-				panelInfo.setBounds(149, 319, 294, 102);
-				panelCos.add(panelInfo);
-		
-				JLabel lblNomPodcast = new JLabel(podcasts.get(0).getNom());
-				panelInfo.add(lblNomPodcast);
-				lblNomPodcast.setForeground(Color.BLACK);
-		
-		JLabel lblTemaPodcast = new JLabel(podcasts.get(0).getTemaPodcast());
-		panelInfo.add(lblTemaPodcast);
-		lblTemaPodcast.setForeground(Color.WHITE);
-		
-		JLabel lblPreuPodcast = new JLabel(String.valueOf(podcasts.get(0).getPreu()));
-		panelInfo.add(lblPreuPodcast);
-		lblPreuPodcast.setForeground(Color.WHITE);
-		
-		/***********PODCAST 2**************/
-		
-		JLabel lblLlista_1 = new JLabel("");
-		lblLlista = new JLabel("",
-				new ImageIcon(
-						MenuPpal.class.getResource("/imatgesPerPantalles/imatgesLlistaPodcasts/imatgePodcast2.png")),
-				SwingConstants.CENTER);
-		lblLlista_1.setBackground(new Color(0, 204, 204));
-		lblLlista_1.setBounds(516, 86, 294, 248);
-		panelCos.add(lblLlista_1);
+		JPanel panelInfo = new JPanel();
+		panelInfo.setLayout(new GridBagLayout());
+		panelInfo.setSize(1000, 1000);
+		panelInfo.setBackground(new Color(51, 51, 255));
+		panelInfo.setBounds(149, 319, 294, 102);
+		panelCos.add(panelInfo);
 
-		/***********COS PAGINA**************/
+		JLabel lblNomPodcast = new JLabel(podcasts.get(0).getNom());
+		lblNomPodcast.setFont(new Font("Dialog", Font.BOLD, 13));
+		GridBagConstraints gbc_lblNomPodcast = new GridBagConstraints();
+		gbc_lblNomPodcast.insets = new Insets(0, 0, 40, 40);
+		gbc_lblNomPodcast.gridx = 2;
+		gbc_lblNomPodcast.gridy = 0;
+		panelInfo.add(lblNomPodcast, gbc_lblNomPodcast);
+		lblNomPodcast.setForeground(Color.BLACK);
+
+		JLabel lblTemaPodcast = new JLabel(podcasts.get(0).getTemaPodcast());
+		GridBagConstraints gbc_lblTemaPodcast = new GridBagConstraints();
+		gbc_lblTemaPodcast.gridx = 0;
+		gbc_lblTemaPodcast.gridy = 5;
+		panelInfo.add(lblTemaPodcast, gbc_lblTemaPodcast);
+		lblTemaPodcast.setForeground(Color.WHITE);
+
+		JLabel lblPreuPodcast = new JLabel(String.valueOf("Preu: "+podcasts.get(0).getPreu()));
+		GridBagConstraints gbc_lblPreuPodcast = new GridBagConstraints();
+		gbc_lblPreuPodcast.gridx = 3;
+		gbc_lblPreuPodcast.gridy = 5;
+		panelInfo.add(lblPreuPodcast, gbc_lblPreuPodcast);
+		lblPreuPodcast.setForeground(Color.WHITE);
+
+		/*********** PODCAST 2 **************/
+
+		JLabel lblLlista2 = new JLabel("");
+		lblLlista2 = new JLabel("", new ImageIcon(MenuPpal.class.getResource(podcasts.get(0).getImatge())),
+				SwingConstants.CENTER);
+		lblLlista2.setBackground(new Color(0, 204, 204));
+		lblLlista2.setBounds(555, 72, 294, 248);
+		panelCos.add(lblLlista2);
+
+		JPanel panelInfo2 = new JPanel();
+		panelInfo2.setLayout(new GridBagLayout());
+		panelInfo2.setSize(1000, 1000);
+		panelInfo2.setBackground(new Color(51, 51, 255));
+		panelInfo2.setBounds(555, 319, 294, 102);
+		panelCos.add(panelInfo2);
+
+		JLabel lblNomPodcast2 = new JLabel(podcasts.get(0).getNom());
+		lblNomPodcast2.setFont(new Font("Dialog", Font.BOLD, 13));
+		GridBagConstraints gbc_lblNomPodcast2 = new GridBagConstraints();
+		gbc_lblNomPodcast2.insets = new Insets(0, 0, 40, 40);
+		gbc_lblNomPodcast2.gridx = 2;
+		gbc_lblNomPodcast2.gridy = 0;
+		panelInfo2.add(lblNomPodcast2, gbc_lblNomPodcast2);
+		lblNomPodcast2.setForeground(Color.BLACK);
+
+		JLabel lblTemaPodcast2 = new JLabel(podcasts.get(0).getTemaPodcast());
+		GridBagConstraints gbc_lblTemaPodcast2 = new GridBagConstraints();
+		gbc_lblTemaPodcast2.gridx = 0;
+		gbc_lblTemaPodcast2.gridy = 5;
+		panelInfo2.add(lblTemaPodcast2, gbc_lblTemaPodcast2);
+		lblTemaPodcast2.setForeground(Color.WHITE);
+
+		JLabel lblPreuPodcast2 = new JLabel(String.valueOf("Preu: "+podcasts.get(0).getPreu()));
+		GridBagConstraints gbc_lblPreuPodcast2 = new GridBagConstraints();
+		gbc_lblPreuPodcast2.gridx = 3;
+		gbc_lblPreuPodcast2.gridy = 5;
+		panelInfo2.add(lblPreuPodcast2, gbc_lblPreuPodcast2);
+		lblPreuPodcast2.setForeground(Color.WHITE);
+
+		/*********** COS PAGINA **************/
 		JLabel lblCosPagina = new JLabel("");
-		
+
 		lblCosPagina = new JLabel("",
 				new ImageIcon(MenuPpal.class.getResource("/imatgesPerPantalles/imatgesApp/BG_Llista_Podcasts.jpg")),
 				SwingConstants.CENTER);
