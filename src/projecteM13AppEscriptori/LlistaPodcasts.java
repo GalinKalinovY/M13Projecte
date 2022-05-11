@@ -1,6 +1,5 @@
 package projecteM13AppEscriptori;
 
-import cat.almata.projectem13.classes.*;
 import cat.almata.projectem13.connexioBBDD.*;
 
 import java.awt.EventQueue;
@@ -11,46 +10,28 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Graphics;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.JPanel;
-import javax.swing.Icon;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
+
 
 import java.awt.FlowLayout;
 import java.awt.Font;
 
-import javax.swing.JMenuBar;
 import java.awt.Color;
-import java.awt.Dimension;
 
 import javax.swing.JButton;
-import javax.swing.JTable;
-import java.awt.SystemColor;
-import javax.swing.table.DefaultTableModel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class LlistaPodcasts extends ConnexioMysql {
 
@@ -168,6 +149,10 @@ public class LlistaPodcasts extends ConnexioMysql {
 		});
 
 		JButton btnEntra_Registrat = new JButton("Entra/Registrat");
+		btnEntra_Registrat.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnEntra_Registrat.setForeground(Color.CYAN);
 		btnEntra_Registrat.setBackground(Color.MAGENTA);
 		panelMenu.add(btnEntra_Registrat);
@@ -188,7 +173,14 @@ public class LlistaPodcasts extends ConnexioMysql {
 		lblLlista.setBounds(159, 48, 294, 248);
 		panelCos.add(lblLlista);
 
-		JPanel panelInfo = new JPanel();
+	    JPanel panelInfo = new JPanel();
+	    panelInfo.addMouseListener(new MouseAdapter() {
+	    	@Override
+	    	public void mouseClicked(MouseEvent e) {
+	    		//ens portara a la pàgina del podcast amb la seva informació
+	    	}
+	    });
+
 		panelInfo.setLayout(new GridBagLayout());
 		panelInfo.setSize(1000, 1000);
 		panelInfo.setBackground(new Color(51, 51, 255));
@@ -373,9 +365,9 @@ public class LlistaPodcasts extends ConnexioMysql {
 		gbc_lblPreuPodcast5.gridy = 5;
 		panelInfo5.add(lblPreuPodcast5, gbc_lblPreuPodcast5);
 		lblPreuPodcast5.setForeground(Color.WHITE);
-		
+
 		/*********** PODCAST 6 **************/
-		
+
 		JPanel panelInfo6 = new JPanel();
 		panelInfo6.setBackground(new Color(51, 51, 255));
 		panelInfo6.setBounds(555, 644, 294, 102);
@@ -386,7 +378,7 @@ public class LlistaPodcasts extends ConnexioMysql {
 		gbl_panelInfo6.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		gbl_panelInfo6.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		panelInfo6.setLayout(gbl_panelInfo6);
-		
+
 		JLabel lblLlista6 = new JLabel("", new ImageIcon(MenuPpal.class.getResource(podcasts.get(5).getImatge())),
 				SwingConstants.CENTER);
 		lblLlista6.setBackground(new Color(0, 204, 204));
@@ -416,7 +408,7 @@ public class LlistaPodcasts extends ConnexioMysql {
 		gbc_lblPreuPodcast6.gridx = 3;
 		gbc_lblPreuPodcast6.gridy = 5;
 		panelInfo6.add(lblPreuPodcast6, gbc_lblPreuPodcast6);
-		
+
 		/*********** PODCAST 7 **************/
 
 		JLabel lblLlista7 = new JLabel("", new ImageIcon(MenuPpal.class.getResource(podcasts.get(6).getImatge())),
@@ -502,10 +494,9 @@ public class LlistaPodcasts extends ConnexioMysql {
 		lblLlista8.setBackground(new Color(0, 204, 204));
 		lblLlista8.setBounds(1410, 409, 294, 248);
 		panelCos.add(lblLlista8);
-		
+
 		/*********** COS PAGINA **************/
 		JLabel lblCosPagina = new JLabel("");
-		
 
 		lblCosPagina = new JLabel("",
 				new ImageIcon(MenuPpal.class.getResource("/imatgesPerPantalles/imatgesApp/BG_Llista_Podcasts.jpg")),
