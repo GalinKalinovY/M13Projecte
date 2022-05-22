@@ -74,7 +74,7 @@ public class LlistaPodcasts extends ConnexioMysql {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/M13Projecte",
-					"root", "galin");
+					"root", "galinkalinov99");
 			System.out.println("Conectant...");
 
 			podcasts = consultaPodcasts(connection);

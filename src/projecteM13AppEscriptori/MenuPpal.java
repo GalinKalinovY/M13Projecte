@@ -151,7 +151,6 @@ public class MenuPpal {
 				try {
 					paginaRegistre = new PaginaRegistre();
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				String[] s = new String[] { "0" };
@@ -192,7 +191,6 @@ public class MenuPpal {
 				try {
 					llistaPodcasts = new LlistaPodcasts();
 				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				String[] s = new String[] { "0" };
