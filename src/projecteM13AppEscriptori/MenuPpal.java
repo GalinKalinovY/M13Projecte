@@ -37,10 +37,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MenuPpal {
 
 	private JFrame frame;
+	private static String nomUsuariLogin = "";
 
 	/**
 	 * Launch the application.
@@ -49,8 +52,15 @@ public class MenuPpal {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MenuPpal window = new MenuPpal();
-					window.frame.setVisible(true);
+					if (args.length != 0) {
+						MenuPpal window = new MenuPpal(args[0]);
+						window.frame.setVisible(true);
+						nomUsuariLogin=args[0];
+					} else {
+						MenuPpal window = new MenuPpal("");
+						window.frame.setVisible(true);
+						nomUsuariLogin ="";
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -61,7 +71,8 @@ public class MenuPpal {
 	/**
 	 * Create the application.
 	 */
-	public MenuPpal() {
+	public MenuPpal(String nomUsuari) {
+		nomUsuariLogin=nomUsuari;
 		initialize();
 	}
 
@@ -79,19 +90,26 @@ public class MenuPpal {
 		FlowLayout fl_panelMenu = (FlowLayout) panelMenu.getLayout();
 		// fl_panelMenu.setVgap(30);
 		frame.getContentPane().add(panelMenu, BorderLayout.NORTH);
-
-		JLabel lblIconaMenu = new JLabel("");
 		// lblIconaMenu.setIcon(new
 		// ImageIcon(MenuPpal.class.getResource("/imatgesPerPantalles/imatgesApp/podcastNeonIcona.jpeg")));
 
 		ImageIcon imageIcon = new ImageIcon(
 				new ImageIcon(MenuPpal.class.getResource("/imatgesPerPantalles/imatgesApp/podcastNeonIcona.jpeg"))
 						.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
-		lblIconaMenu.setIcon(imageIcon);
-		panelMenu.add(lblIconaMenu);
+
+		JLabel lblNomUsuari = new JLabel("Benvingut,");
+		lblNomUsuari.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 12));
+		lblNomUsuari.setForeground(new Color(255, 255, 255));
+		panelMenu.add(lblNomUsuari);
+		
+		if(nomUsuariLogin !=null)lblNomUsuari.setText("Benvingut, "+nomUsuariLogin);
 
 		JLabel lblSpacer = new JLabel("               ");
 		panelMenu.add(lblSpacer);
+
+		JLabel lblIconaMenu = new JLabel("");
+		lblIconaMenu.setIcon(imageIcon);
+		panelMenu.add(lblIconaMenu);
 
 		JLabel lblLlistaPodcasts = new JLabel(" Llista Podcasts ");
 		lblLlistaPodcasts.setForeground(Color.CYAN);
@@ -100,12 +118,12 @@ public class MenuPpal {
 			public void mouseClicked(MouseEvent e) {
 				LlistaPodcasts llistaPodcasts = null;
 				try {
-					llistaPodcasts = new LlistaPodcasts();
+					llistaPodcasts = new LlistaPodcasts(nomUsuariLogin);
 				} catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				String[] s = new String[] { "0" };
+				String[] s = new String[] { nomUsuariLogin };
 				llistaPodcasts.main(s);
 				frame.dispose();
 			}
@@ -116,12 +134,26 @@ public class MenuPpal {
 		panelMenu.add(lblElsMeusPodcasts);
 		lblElsMeusPodcasts.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				// you can open a new frame here as
-				// i have assumed you have declared "frame" as instance variable
-				/*
-				 * frame = new JFrame("Els meus Podcasts"); frame.setVisible(true);
-				 * frame.setBounds(300, 100, 800, 800);
-				 */
+				ElsMeusPodcasts elsmeusPodcasts = null;
+				if (nomUsuariLogin != null) {
+					try {
+						elsmeusPodcasts = new ElsMeusPodcasts(nomUsuariLogin);
+					} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
+					}
+					String[] s = new String[] { nomUsuariLogin };
+					elsmeusPodcasts.main(s);
+					frame.dispose();
+				} else {
+					try {
+						elsmeusPodcasts = new ElsMeusPodcasts("");
+					} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
+					}
+					String[] s = new String[] { "" };
+					elsmeusPodcasts.main(s);
+					frame.dispose();
+				}
 
 			}
 		});
@@ -135,7 +167,7 @@ public class MenuPpal {
 				// i have assumed you have declared "frame" as instance variable
 				frame = new JFrame("Retransmissió Podcast");
 				frame.setVisible(true);
-				frame.setBounds(300, 100, 800, 800);				
+				frame.setBounds(300, 100, 800, 800);
 				frame.dispose();
 			}
 		});
@@ -153,7 +185,7 @@ public class MenuPpal {
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
-				String[] s = new String[] { "0" };
+				String[] s = new String[] { "" };
 				paginaRegistre.main(s);
 				frame.dispose();
 			}
@@ -165,21 +197,35 @@ public class MenuPpal {
 		panelCos.setBackground(Color.DARK_GRAY);
 		frame.getContentPane().add(panelCos, BorderLayout.CENTER);
 
-		JLabel lblTitol = new JLabel("Qui som, que oferim...etc.");
-		lblTitol.setBounds(262, 195, 501, 50);
+		JLabel lblTitol = new JLabel("Milions de podcasts,\n des dels més coneguts fins als independents.");
+		lblTitol.setBounds(262, 195, 1237, 50);
 		lblTitol.setFont(new Font("Arial", Font.BOLD, 30));
 		lblTitol.setPreferredSize(new Dimension(250, 100));
 		panelCos.add(lblTitol);
-		lblTitol.setForeground(Color.WHITE);
+		lblTitol.setForeground(new Color(204, 153, 255));
 
-		JLabel lblDescripcio = new JLabel("Una breu descripció del que fem");
-		lblDescripcio.setBounds(362, 449, 386, 50);
-		lblDescripcio.setFont(new Font("Verdana", Font.PLAIN, 15));
+		JLabel lblDescripcio = new JLabel("Un catàleg que diu molt.");
+		lblDescripcio.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDescripcio.setBounds(262, 273, 223, 78);
+		lblDescripcio.setFont(new Font("Dialog", Font.BOLD, 15));
 		lblDescripcio.setPreferredSize(new Dimension(250, 100));
 		panelCos.add(lblDescripcio);
 		lblDescripcio.setForeground(Color.WHITE);
 
 		JButton btnLlistaPodcasts = new JButton("Llista Podcasts");
+		btnLlistaPodcasts.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				LlistaPodcasts llistaPodcasts = null;
+				try {
+					llistaPodcasts = new LlistaPodcasts(nomUsuariLogin);
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				}
+				String[] s = new String[] { nomUsuariLogin };
+				llistaPodcasts.main(s);
+				frame.dispose();
+			}
+		});
 		btnLlistaPodcasts.setBackground(new Color(0, 204, 204));
 		btnLlistaPodcasts.setBounds(372, 512, 158, 43);
 		btnLlistaPodcasts.setBorder(new LineBorder(new Color(255, 0, 153), 1, true));
@@ -189,15 +235,41 @@ public class MenuPpal {
 			public void mouseClicked(MouseEvent e) {
 				LlistaPodcasts llistaPodcasts = null;
 				try {
-					llistaPodcasts = new LlistaPodcasts();
+					llistaPodcasts = new LlistaPodcasts("");
 				} catch (ClassNotFoundException e1) {
 					e1.printStackTrace();
 				}
-				String[] s = new String[] { "0" };
+				String[] s = new String[] { "" };
 				llistaPodcasts.main(s);
 				frame.dispose();
 			}
 		});
+
+		JLabel lblLaColleccis = new JLabel(
+				"La col·lecció és enorme i la varietat, infinita. Des de presentadors de renom internacional fins als creadors més alternatius,");
+		lblLaColleccis.setPreferredSize(new Dimension(250, 100));
+		lblLaColleccis.setHorizontalAlignment(SwingConstants.LEFT);
+		lblLaColleccis.setForeground(Color.WHITE);
+		lblLaColleccis.setFont(new Font("Dialog", Font.PLAIN, 15));
+		lblLaColleccis.setBounds(272, 363, 1080, 57);
+		panelCos.add(lblLaColleccis);
+
+		JLabel lblAquestProgramaDe = new JLabel(
+				"Aquest programa de què tothom parla? El tens a la app Podcasts. Aquesta joia que només tu coneixes? També.");
+		lblAquestProgramaDe.setPreferredSize(new Dimension(250, 100));
+		lblAquestProgramaDe.setHorizontalAlignment(SwingConstants.LEFT);
+		lblAquestProgramaDe.setForeground(Color.WHITE);
+		lblAquestProgramaDe.setFont(new Font("Dialog", Font.PLAIN, 15));
+		lblAquestProgramaDe.setBounds(272, 330, 956, 57);
+		panelCos.add(lblAquestProgramaDe);
+
+		JLabel lblAquCapVeu = new JLabel("aquí cap veu se sent més alta que una altra.");
+		lblAquCapVeu.setPreferredSize(new Dimension(250, 100));
+		lblAquCapVeu.setHorizontalAlignment(SwingConstants.LEFT);
+		lblAquCapVeu.setForeground(Color.WHITE);
+		lblAquCapVeu.setFont(new Font("Dialog", Font.PLAIN, 15));
+		lblAquCapVeu.setBounds(272, 399, 1080, 57);
+		panelCos.add(lblAquCapVeu);
 
 		JButton btnRetransmissio = new JButton("Retransmissió");
 		btnRetransmissio.setForeground(new Color(255, 0, 204));

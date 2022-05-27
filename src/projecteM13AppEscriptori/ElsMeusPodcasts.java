@@ -36,13 +36,12 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.Icon;
 import javax.swing.JTextArea;
 
-public class PaginaPodcastInfo {
+public class ElsMeusPodcasts {
 
 	private JFrame frame;
 	private JLabel lblCosPagina_1;
 	private static String idPodcast;
 	private static String nomUsuariLogin;
-	Podcast podcastTriat;
 
 	/**
 	 * Launch the application.
@@ -52,11 +51,11 @@ public class PaginaPodcastInfo {
 			public void run() {
 				try {
 					if (args.length != 0) {
-						PaginaPodcastInfo window = new PaginaPodcastInfo(args[0], args[1]);
+						ElsMeusPodcasts window = new ElsMeusPodcasts(args[0]);
 						window.frame.setVisible(true);
 						idPodcast = args[0];
 					} else {
-						PaginaPodcastInfo window = new PaginaPodcastInfo(null, null);
+						ElsMeusPodcasts window = new ElsMeusPodcasts(null);
 						window.frame.setVisible(true);
 						idPodcast = args[0];
 					}
@@ -74,8 +73,7 @@ public class PaginaPodcastInfo {
 	 * 
 	 * @throws ClassNotFoundException
 	 */
-	public PaginaPodcastInfo(String stringId, String stringNom) throws ClassNotFoundException {
-		idPodcast = stringId;
+	public ElsMeusPodcasts(String stringNom) throws ClassNotFoundException {
 		nomUsuariLogin = stringNom;
 		initialize();
 	}
@@ -87,7 +85,7 @@ public class PaginaPodcastInfo {
 	 */
 	private void initialize() throws ClassNotFoundException {
 
-		podcastTriat = null;
+		Podcast podcastTriat = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/M13Projecte",
@@ -95,8 +93,8 @@ public class PaginaPodcastInfo {
 			System.out.println("Conectant...");
 
 			ConnexioMysql conMysql = new ConnexioMysql();
-			if (idPodcast != null) {
-				podcastTriat = conMysql.consultaPodcast(connection, idPodcast);
+			if (nomUsuariLogin != null && nomUsuariLogin != "") {
+				podcastTriat = conMysql.elsMeusPodcasts(connection, nomUsuariLogin);
 			}
 
 		} catch (SQLException sqlException) {
@@ -110,10 +108,7 @@ public class PaginaPodcastInfo {
 		JPanel panelMenu = new JPanel();
 		panelMenu.setBackground(Color.DARK_GRAY);
 		FlowLayout fl_panelMenu = (FlowLayout) panelMenu.getLayout();
-		// fl_panelMenu.setVgap(30);
 		frame.getContentPane().add(panelMenu, BorderLayout.NORTH);
-		// lblIconaMenu.setIcon(new
-		// ImageIcon(MenuPpal.class.getResource("/imatgesPerPantalles/imatgesApp/podcastNeonIcona.jpeg")));
 
 		ImageIcon imageIcon = new ImageIcon(
 				new ImageIcon(MenuPpal.class.getResource("/imatgesPerPantalles/imatgesApp/podcastNeonIcona.jpeg"))
@@ -194,7 +189,6 @@ public class PaginaPodcastInfo {
 					elsmeusPodcasts.main(s);
 					frame.dispose();
 				}
-
 			}
 		});
 
@@ -230,112 +224,79 @@ public class PaginaPodcastInfo {
 		btnEntra_Registrat.setForeground(Color.CYAN);
 		btnEntra_Registrat.setBackground(Color.MAGENTA);
 		panelMenu.add(btnEntra_Registrat);
+		
 		JPanel panelCos = new JPanel();
 		panelCos.setLayout(null);
 		panelCos.setBackground(Color.DARK_GRAY);
 
 		frame.getContentPane().add(panelCos, BorderLayout.CENTER);
 
-		JLabel lblNewLabel_3 = new JLabel("No pots afegir el podcast si no estas logeijat");
-		lblNewLabel_3.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 14));
-		lblNewLabel_3.setVisible(false);
-		lblNewLabel_3.setForeground(new Color(255, 255, 255));
-		lblNewLabel_3.setBounds(206, 35, 437, 43);
-		panelCos.add(lblNewLabel_3);
-
 		JLabel lblCosPagina = new JLabel("");
-
-		JLabel lblLlista = new JLabel("", new ImageIcon(MenuPpal.class.getResource(podcastTriat.getImatge())),
-				SwingConstants.CENTER);
-		lblLlista.setBounds(1135, 198, 572, 455);
-		panelCos.add(lblLlista);
-		lblLlista.setBackground(new Color(0, 204, 204));
-
-		JLabel lblNewLabel_1 = new JLabel(podcastTriat.getNom());
-		lblNewLabel_1.setFont(new Font("Dialog", Font.BOLD, 20));
-		lblNewLabel_1.setForeground(new Color(204, 51, 255));
-		lblNewLabel_1.setBounds(206, 149, 261, 84);
-		panelCos.add(lblNewLabel_1);
-
-		JButton btnNewButton = new JButton("Escolta");
-		btnNewButton.setBounds(206, 628, 117, 25);
-		panelCos.add(btnNewButton);
-
-		JButton btnNewButton_1 = new JButton("Afegir");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-
-					Connection connection = null;
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/M13Projecte",
-							"root", "galinkalinov99");
-					System.out.println("Conectant...");
-
-					ConnexioMysql cm = new ConnexioMysql();
-					if (nomUsuariLogin != null && nomUsuariLogin != "") {
-						String resultat = cm.afegirPodcastPersonal(nomUsuariLogin, podcastTriat, connection);
-
-						if (resultat.equals("afegit")) {
-							ElsMeusPodcasts elsmeusPodcasts = null;
-							if (nomUsuariLogin != null) {
-								try {
-									elsmeusPodcasts = new ElsMeusPodcasts(nomUsuariLogin);
-								} catch (ClassNotFoundException e1) {
-									e1.printStackTrace();
-								}
-								String[] s = new String[] { nomUsuariLogin };
-								elsmeusPodcasts.main(s);
-								frame.dispose();
-							} else {
-								try {
-									elsmeusPodcasts = new ElsMeusPodcasts("");
-								} catch (ClassNotFoundException e1) {
-									e1.printStackTrace();
-								}
-								String[] s = new String[] { "" };
-								elsmeusPodcasts.main(s);
-								frame.dispose();
-							}
-						}
-
-						if (connection != null) {
-							connection.close();
-						}
-					} else {
-						lblNewLabel_3.setVisible(true);
-						System.out.println("El usuari es guest i no pot afegir el podcast a la llista personal");
-					}
-
-				} catch (SQLException | ClassNotFoundException sqlException) {
-					sqlException.printStackTrace();
-				}
-			}
-		});
-		btnNewButton_1.setBounds(350, 628, 117, 25);
-		panelCos.add(btnNewButton_1);
-
-		JTextArea textArea = new JTextArea(podcastTriat.getDescripcio());
-		textArea.setFont(new Font("Dialog", Font.ITALIC, 18));
-		textArea.setForeground(new Color(255, 255, 255));
-		textArea.setEditable(false);
-		textArea.setLineWrap(true);
-		textArea.setOpaque(false);
-		textArea.setBorder(BorderFactory.createEmptyBorder());
-		textArea.setBounds(206, 258, 566, 268);
-		panelCos.add(textArea);
-
-		JLabel lblNewLabel_2 = new JLabel(String.valueOf(podcastTriat.getPreu()));
-		lblNewLabel_2.setForeground(new Color(255, 255, 255));
-		lblNewLabel_2.setFont(new Font("Dialog", Font.BOLD, 20));
-		lblNewLabel_2.setBounds(618, 617, 147, 43);
-		panelCos.add(lblNewLabel_2);
-
-		JLabel lblNewLabel = new JLabel("Preu:");
-		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setBounds(548, 628, 78, 25);
+		
+		JLabel lblNewLabel = new JLabel("No tens cap podcast a la teva llista personal, per poder afegir has de anar al podcast corresponent a partir de la Llista Podcasts");
+		lblNewLabel.setBounds(229, 130, 1853, 22);
+		lblNewLabel.setVisible(false);
 		panelCos.add(lblNewLabel);
+		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		
+		
+		if (podcastTriat != null) {
+			JLabel lblLlista = new JLabel("", new ImageIcon(MenuPpal.class.getResource(podcastTriat.getImatge())),
+					SwingConstants.CENTER);
+			lblLlista.setBounds(216, 100, 572, 455);
+			panelCos.add(lblLlista);
+			lblLlista.setBackground(new Color(0, 204, 204));
+
+			JLabel lblNewLabel_1 = new JLabel(podcastTriat.getNom());
+			lblNewLabel_1.setFont(new Font("Dialog", Font.BOLD, 20));
+			lblNewLabel_1.setForeground(new Color(204, 51, 255));
+			lblNewLabel_1.setBounds(1000, 163, 261, 84);
+			panelCos.add(lblNewLabel_1);
+
+			JButton btnNewButton_1 = new JButton("Elimina de la llista");
+			btnNewButton_1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					Connection connection = null;
+
+					try {
+						Class.forName("com.mysql.cj.jdbc.Driver");
+						connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/M13Projecte",
+								"root", "galinkalinov99");
+						System.out.println("Conectant...");
+
+						ConnexioMysql cm = new ConnexioMysql();
+						cm.eliminaPodcastPersonal(nomUsuariLogin, connection);
+					} catch (SQLException | ClassNotFoundException e) {
+						e.printStackTrace();
+					}
+					LlistaPodcasts llistaPodcasts = null;
+					try {
+						llistaPodcasts = new LlistaPodcasts(nomUsuariLogin);
+					} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
+					}
+					String[] s = new String[] { nomUsuariLogin };
+					llistaPodcasts.main(s);
+					frame.dispose();
+					
+				}
+			});
+			btnNewButton_1.setBounds(217, 628, 162, 25);
+			panelCos.add(btnNewButton_1);
+
+			JTextArea textArea = new JTextArea(podcastTriat.getDescripcio());
+			textArea.setFont(new Font("Dialog", Font.ITALIC, 18));
+			textArea.setForeground(new Color(255, 255, 255));
+			textArea.setEditable(false);
+			textArea.setLineWrap(true);
+			textArea.setOpaque(false);
+			textArea.setBorder(BorderFactory.createEmptyBorder());
+			textArea.setBounds(1000, 259, 566, 268);
+			panelCos.add(textArea);
+		}else {
+			lblNewLabel.setVisible(true);
+		}
 
 		lblCosPagina = new JLabel("",
 				new ImageIcon(MenuPpal.class.getResource("/imatgesPerPantalles/imatgesApp/BG_Llista_Podcasts.jpg")),

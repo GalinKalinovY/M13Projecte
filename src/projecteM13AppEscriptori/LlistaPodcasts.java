@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.SwingConstants;
 
-
 import java.awt.FlowLayout;
 import java.awt.Font;
 
@@ -36,6 +35,8 @@ import java.awt.event.ActionEvent;
 public class LlistaPodcasts extends ConnexioMysql {
 
 	private JFrame frame;
+	List<cat.almata.projectem13.classes.LlistaPodcasts> podcasts = null;
+	static String nomUsuariLogeijat;
 
 	/**
 	 * Launch the application.
@@ -44,8 +45,15 @@ public class LlistaPodcasts extends ConnexioMysql {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LlistaPodcasts window = new LlistaPodcasts();
-					window.frame.setVisible(true);
+					if (args.length != 0) {
+						nomUsuariLogeijat = args[0];
+						LlistaPodcasts window = new LlistaPodcasts(args[0]);
+						window.frame.setVisible(true);
+
+					} else {
+						LlistaPodcasts window = new LlistaPodcasts("");
+						window.frame.setVisible(true);
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -58,7 +66,8 @@ public class LlistaPodcasts extends ConnexioMysql {
 	 * 
 	 * @throws ClassNotFoundException
 	 */
-	public LlistaPodcasts() throws ClassNotFoundException {
+	public LlistaPodcasts(String stringNom) throws ClassNotFoundException {
+		nomUsuariLogeijat = stringNom;
 		initialize();
 	}
 
@@ -69,7 +78,7 @@ public class LlistaPodcasts extends ConnexioMysql {
 	 */
 	private void initialize() throws ClassNotFoundException {
 
-		List<cat.almata.projectem13.classes.LlistaPodcasts> podcasts = new ArrayList<cat.almata.projectem13.classes.LlistaPodcasts>();
+		podcasts = new ArrayList<cat.almata.projectem13.classes.LlistaPodcasts>();
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -92,30 +101,61 @@ public class LlistaPodcasts extends ConnexioMysql {
 		FlowLayout fl_panelMenu = (FlowLayout) panelMenu.getLayout();
 		// fl_panelMenu.setVgap(30);
 		frame.getContentPane().add(panelMenu, BorderLayout.NORTH);
-
-		JLabel lblIconaMenu = new JLabel("");
 		// lblIconaMenu.setIcon(new
 		// ImageIcon(MenuPpal.class.getResource("/imatgesPerPantalles/imatgesApp/podcastNeonIcona.jpeg")));
 
 		ImageIcon imageIcon = new ImageIcon(
 				new ImageIcon(MenuPpal.class.getResource("/imatgesPerPantalles/imatgesApp/podcastNeonIcona.jpeg"))
 						.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
-		lblIconaMenu.setIcon(imageIcon);
-		panelMenu.add(lblIconaMenu);
+
+		JLabel lblNewLabel = new JLabel("Benvingut,");
+		lblNewLabel.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 12));
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		panelMenu.add(lblNewLabel);
+
+		if (nomUsuariLogeijat != null)
+			lblNewLabel.setText("Benvingut, "+nomUsuariLogeijat);
 
 		JLabel lblSpacer = new JLabel("               ");
 		panelMenu.add(lblSpacer);
+
+		JLabel lblIconaMenu = new JLabel("");
+		lblIconaMenu.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				MenuPpal menuPpal = null;
+				if(nomUsuariLogeijat!=null) {
+					menuPpal = new MenuPpal(nomUsuariLogeijat);
+					String[] s = new String[] { nomUsuariLogeijat };
+					menuPpal.main(s);
+					frame.dispose();
+				}else {
+					menuPpal = new MenuPpal("");
+					String[] s = new String[] { "" };
+					menuPpal.main(s);
+					frame.dispose();
+				}
+			}
+		});
+		lblIconaMenu.setIcon(imageIcon);
+		panelMenu.add(lblIconaMenu);
 
 		JLabel lblLlistaPodcasts = new JLabel(" Llista Podcasts ");
 		lblLlistaPodcasts.setForeground(Color.CYAN);
 		panelMenu.add(lblLlistaPodcasts);
 		lblLlistaPodcasts.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				// you can open a new frame here as
-				// i have assumed you have declared "frame" as instance variable
-				frame = new JFrame("LLista Podcasts");
-				frame.setVisible(true);
-				frame.setBounds(300, 100, 800, 800);
+				LlistaPodcasts llistaPodcasts = null;
+				try {
+					if (nomUsuariLogeijat != null)
+						lblNewLabel.setText(nomUsuariLogeijat);
+
+					llistaPodcasts = new LlistaPodcasts(nomUsuariLogeijat);
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				}
+				String[] s = new String[] { nomUsuariLogeijat };
+				llistaPodcasts.main(s);
 				frame.dispose();
 			}
 		});
@@ -125,12 +165,26 @@ public class LlistaPodcasts extends ConnexioMysql {
 		panelMenu.add(lblElsMeusPodcasts);
 		lblElsMeusPodcasts.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				// you can open a new frame here as
-				// i have assumed you have declared "frame" as instance variable
-				frame = new JFrame("Els meus Podcasts");
-				frame.setVisible(true);
-				frame.setBounds(300, 100, 800, 800);
-				frame.dispose();
+				ElsMeusPodcasts elsmeusPodcasts = null;
+				if (nomUsuariLogeijat != null) {
+					try {
+						elsmeusPodcasts = new ElsMeusPodcasts(nomUsuariLogeijat);
+					} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
+					}
+					String[] s = new String[] { nomUsuariLogeijat };
+					elsmeusPodcasts.main(s);
+					frame.dispose();
+				} else {
+					try {
+						elsmeusPodcasts = new ElsMeusPodcasts("");
+					} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
+					}
+					String[] s = new String[] { "" };
+					elsmeusPodcasts.main(s);
+					frame.dispose();
+				}
 			}
 		});
 
@@ -151,6 +205,16 @@ public class LlistaPodcasts extends ConnexioMysql {
 		JButton btnEntra_Registrat = new JButton("Entra/Registrat");
 		btnEntra_Registrat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				// quant cliquem sobre el boto ens redireccionarà en la paina del formulari.
+				PaginaRegistre paginaRegistre = null;
+				try {
+					paginaRegistre = new PaginaRegistre();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				String[] s = new String[] { "0" };
+				paginaRegistre.main(s);
+				frame.dispose();
 			}
 		});
 		btnEntra_Registrat.setForeground(Color.CYAN);
@@ -166,20 +230,29 @@ public class LlistaPodcasts extends ConnexioMysql {
 
 		/*********** PODCAST 1 **************/
 		JLabel lblLlista = new JLabel("");
-		Object[] p = podcasts.toArray();
 		lblLlista = new JLabel("", new ImageIcon(MenuPpal.class.getResource(podcasts.get(0).getImatge())),
 				SwingConstants.CENTER);
 		lblLlista.setBackground(new Color(0, 204, 204));
 		lblLlista.setBounds(159, 48, 294, 248);
 		panelCos.add(lblLlista);
 
-	    JPanel panelInfo = new JPanel();
-	    panelInfo.addMouseListener(new MouseAdapter() {
-	    	@Override
-	    	public void mouseClicked(MouseEvent e) {
-	    		//ens portara a la pàgina del podcast amb la seva informació
-	    	}
-	    });
+		JPanel panelInfo = new JPanel();
+		panelInfo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// ens portara a la pàgina del podcast amb la seva informació
+				PaginaPodcastInfo paginaPodcast = null;
+				try {
+					paginaPodcast = new PaginaPodcastInfo(String.valueOf(podcasts.get(0).getId()), nomUsuariLogeijat);
+
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				}
+				String[] s = new String[] { String.valueOf(podcasts.get(0).getId()),nomUsuariLogeijat };
+				paginaPodcast.main(s);
+				frame.dispose();
+			}
+		});
 
 		panelInfo.setLayout(new GridBagLayout());
 		panelInfo.setSize(1000, 1000);
@@ -220,6 +293,22 @@ public class LlistaPodcasts extends ConnexioMysql {
 		panelCos.add(lblLlista2);
 
 		JPanel panelInfo2 = new JPanel();
+		panelInfo2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// ens portara a la pàgina del podcast amb la seva informació
+				PaginaPodcastInfo paginaPodcast = null;
+				try {
+					paginaPodcast = new PaginaPodcastInfo(String.valueOf(podcasts.get(1).getId()),nomUsuariLogeijat);
+
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				}
+				String[] s = new String[] { String.valueOf(podcasts.get(1).getId()),nomUsuariLogeijat };
+				paginaPodcast.main(s);
+				frame.dispose();
+			}
+		});
 		panelInfo2.setLayout(new GridBagLayout());
 		panelInfo2.setSize(1000, 1000);
 		panelInfo2.setBackground(new Color(51, 51, 255));
@@ -259,6 +348,22 @@ public class LlistaPodcasts extends ConnexioMysql {
 		panelCos.add(lblLlista3);
 
 		JPanel panelInfo3 = new JPanel();
+		panelInfo3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// ens portara a la pàgina del podcast amb la seva informació
+				PaginaPodcastInfo paginaPodcast = null;
+				try {
+					paginaPodcast = new PaginaPodcastInfo(String.valueOf(podcasts.get(2).getId()),nomUsuariLogeijat);
+
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				}
+				String[] s = new String[] { String.valueOf(podcasts.get(2).getId()),nomUsuariLogeijat };
+				paginaPodcast.main(s);
+				frame.dispose();
+			}
+		});
 		panelInfo3.setLayout(new GridBagLayout());
 		panelInfo3.setSize(1000, 1000);
 		panelInfo3.setBackground(new Color(51, 51, 255));
@@ -298,6 +403,22 @@ public class LlistaPodcasts extends ConnexioMysql {
 		panelCos.add(lblLlista4);
 
 		JPanel panelInfo4 = new JPanel();
+		panelInfo4.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// ens portara a la pàgina del podcast amb la seva informació
+				PaginaPodcastInfo paginaPodcast = null;
+				try {
+					paginaPodcast = new PaginaPodcastInfo(String.valueOf(podcasts.get(3).getId()),nomUsuariLogeijat);
+
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				}
+				String[] s = new String[] { String.valueOf(podcasts.get(3).getId()),nomUsuariLogeijat };
+				paginaPodcast.main(s);
+				frame.dispose();
+			}
+		});
 		panelInfo4.setLayout(new GridBagLayout());
 		panelInfo4.setSize(1000, 1000);
 		panelInfo4.setBackground(new Color(51, 51, 255));
@@ -337,6 +458,22 @@ public class LlistaPodcasts extends ConnexioMysql {
 		panelCos.add(lblLlista5);
 
 		JPanel panelInfo5 = new JPanel();
+		panelInfo5.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// ens portara a la pàgina del podcast amb la seva informació
+				PaginaPodcastInfo paginaPodcast = null;
+				try {
+					paginaPodcast = new PaginaPodcastInfo(String.valueOf(podcasts.get(4).getId()),nomUsuariLogeijat);
+
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				}
+				String[] s = new String[] { String.valueOf(podcasts.get(4).getId()),nomUsuariLogeijat };
+				paginaPodcast.main(s);
+				frame.dispose();
+			}
+		});
 		panelInfo5.setLayout(new GridBagLayout());
 		panelInfo5.setSize(1000, 1000);
 		panelInfo5.setBackground(new Color(51, 51, 255));
@@ -369,6 +506,22 @@ public class LlistaPodcasts extends ConnexioMysql {
 		/*********** PODCAST 6 **************/
 
 		JPanel panelInfo6 = new JPanel();
+		panelInfo6.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// ens portara a la pàgina del podcast amb la seva informació
+				PaginaPodcastInfo paginaPodcast = null;
+				try {
+					paginaPodcast = new PaginaPodcastInfo(String.valueOf(podcasts.get(5).getId()),nomUsuariLogeijat);
+
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				}
+				String[] s = new String[] { String.valueOf(podcasts.get(5).getId()),nomUsuariLogeijat };
+				paginaPodcast.main(s);
+				frame.dispose();
+			}
+		});
 		panelInfo6.setBackground(new Color(51, 51, 255));
 		panelInfo6.setBounds(555, 644, 294, 102);
 		panelCos.add(panelInfo6);
@@ -418,6 +571,22 @@ public class LlistaPodcasts extends ConnexioMysql {
 		panelCos.add(lblLlista7);
 
 		JPanel panelInfo7 = new JPanel();
+		panelInfo7.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// ens portara a la pàgina del podcast amb la seva informació
+				PaginaPodcastInfo paginaPodcast = null;
+				try {
+					paginaPodcast = new PaginaPodcastInfo(String.valueOf(podcasts.get(6).getId()),nomUsuariLogeijat);
+
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				}
+				String[] s = new String[] { String.valueOf(podcasts.get(6).getId()),nomUsuariLogeijat };
+				paginaPodcast.main(s);
+				frame.dispose();
+			}
+		});
 		panelInfo7.setBackground(new Color(51, 51, 255));
 		panelInfo7.setBounds(964, 644, 294, 102);
 		panelCos.add(panelInfo7);
@@ -455,6 +624,22 @@ public class LlistaPodcasts extends ConnexioMysql {
 		/*********** PODCAST 8 **************/
 
 		JPanel panelInfo8 = new JPanel();
+		panelInfo8.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// ens portara a la pàgina del podcast amb la seva informació
+				PaginaPodcastInfo paginaPodcast = null;
+				try {
+					paginaPodcast = new PaginaPodcastInfo(String.valueOf(podcasts.get(7).getId()),nomUsuariLogeijat);
+
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				}
+				String[] s = new String[] { String.valueOf(podcasts.get(7).getId()),nomUsuariLogeijat };
+				paginaPodcast.main(s);
+				frame.dispose();
+			}
+		});
 		panelInfo8.setBackground(new Color(51, 51, 255));
 		panelInfo8.setBounds(1410, 644, 294, 102);
 		panelCos.add(panelInfo8);
@@ -502,7 +687,7 @@ public class LlistaPodcasts extends ConnexioMysql {
 				new ImageIcon(MenuPpal.class.getResource("/imatgesPerPantalles/imatgesApp/BG_Llista_Podcasts.jpg")),
 				SwingConstants.CENTER);
 		lblCosPagina.setBackground(new Color(0, 204, 204));
-		lblCosPagina.setBounds(-100, -300, 1920, 1080);
+		lblCosPagina.setBounds(-100, -300, 1971, 1108);
 		panelCos.add(lblCosPagina);
 
 		frame.setBounds(300, 100, 1920, 1080);

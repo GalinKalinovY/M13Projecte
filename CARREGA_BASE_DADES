@@ -1,0 +1,40 @@
+INSERT INTO Podcast (format, nomProducte, descripcio, preu, imatgeProducte) VALUES ('MP3' ,'Podcast n1', 'Som éssers socials i com a tal necessitem estar en contacte (socialització) per sobreviure. La nostra condició humana està definida per la cultura, i aquesta no es desenvolupa estant aïllats. Per tant la socialització es molt important.', '0.00','/imatgesPerPantalles/imatgesLlistaPodcasts/imatgePodcast1.jpg');
+
+INSERT INTO Podcast (format, nomProducte, descripcio, preu, imatgeProducte) VALUES ('MP3' ,'Podcast n2', 'Al món actual, el racisme i la discriminació racial es manifesten en formes complexes i pertorbadores. En el cas dEuropa, aquestes qüestions sestan convertint cada cop més en un element essencial dalguns problemes polítics i socials.', '0.00','/imatgesPerPantalles/imatgesLlistaPodcasts/imatgePodcast2.jpg');
+
+INSERT INTO Podcast (format, nomProducte, descripcio, preu, imatgeProducte) VALUES ('MP3' ,'Podcast n3', 'Davant la importància que les bandes de música tenen als nostres pobles i ciutats i al conjunt de la societat, mhe proposat estudiar qüestions que tenen a veure amb leducació i la formació que promouen aquestes agrupacions musicals i de com influeixen.', '14.95','/imatgesPerPantalles/imatgesLlistaPodcasts/imatgePodcast3.jpg');
+
+INSERT INTO Podcast (format, nomProducte, descripcio, preu, imatgeProducte) VALUES ('MP3' ,'Podcast n4', 'La nova ràdio té nom: podcast. Aquest nou format dàudio digital ha arribat per quedar-se i ha conquerit els usuaris per la forma àgil, directa i fresca de comunicar. Per aixó introdueixo la meva historia de perquè he començat a fer podcasts.', '0.00','/imatgesPerPantalles/imatgesLlistaPodcasts/imatgePodcast4.jpg');
+
+INSERT INTO Podcast (format, nomProducte, descripcio, preu, imatgeProducte) VALUES ('MP3' ,'Podcast n5', 'Viatjar, si es fa amb sinceritat, hauria daugmentar el nostre coneixement del món. Quan viatgem a altres països oa altres regions al nostre mateix país o cultura, aprenem sobre la seva història, geografia, música, art..etc.', '6.99','/imatgesPerPantalles/imatgesLlistaPodcasts/imatgePodcast5.jpg');
+
+INSERT INTO Podcast (format, nomProducte, descripcio, preu, imatgeProducte) VALUES ('MP3' ,'Podcast n6', 'LAstronomia i els temes relacionats amb ella són lavantguarda de la ciència i la tecnologia, resolent qüestions fonamentals sobre la nostra existència i sobre el Univers en què vivim.', '10.00','/imatgesPerPantalles/imatgesLlistaPodcasts/imatgePodcast6.jpg');
+
+INSERT INTO Podcast (format, nomProducte, descripcio, preu, imatgeProducte) VALUES ('MP3' ,'Podcast n7', 'El que fem servir al nostre dia a dia com la televisió, els ordinadors, els nostres dispositius mòbils són alguns dels exemples més habituals que sempel·len com a receptors dinformació en làmbit de les telecomunicacions.', '4.99','/imatgesPerPantalles/imatgesLlistaPodcasts/imatgePodcast7.jpg');
+
+INSERT INTO Podcast (format, nomProducte, descripcio, preu, imatgeProducte) VALUES ('MP3' ,'Podcast n8', 'Ja et vas preguntar quant les experiències de la teva infància poden influenciar la teva vida ara? o com la teva vida és afectada per les teves experiències passades?', '0.00','/imatgesPerPantalles/imatgesLlistaPodcasts/imatgePodcast8.jpg');
+
+
+INSERT INTO LListaPodcasts (nomProducte,Preu,imatgePodcast,temaPodcast) 
+VALUES ('Podcast n1','0.00','/imatgesPerPantalles/imatgesLlistaPodcasts/imatgePodcast1.jpg','Socialització');
+
+INSERT INTO LListaPodcasts (nomProducte,Preu,imatgePodcast,temaPodcast) 
+VALUES ('Podcast n2','0.00','/imatgesPerPantalles/imatgesLlistaPodcasts/imatgePodcast2.jpg','Rasizme');
+
+INSERT INTO LListaPodcasts (nomProducte,Preu,imatgePodcast,temaPodcast) 
+VALUES ('Podcast n3','14.95','/imatgesPerPantalles/imatgesLlistaPodcasts/imatgePodcast3.jpg','Bandes Musicals');
+
+INSERT INTO LListaPodcasts (nomProducte,Preu,imatgePodcast,temaPodcast) 
+VALUES ('Podcast n4','0.00','/imatgesPerPantalles/imatgesLlistaPodcasts/imatgePodcast4.jpg','El teu primer podcast');
+
+INSERT INTO LListaPodcasts (nomProducte,Preu,imatgePodcast,temaPodcast) 
+VALUES ('Podcast n5','6.99','/imatgesPerPantalles/imatgesLlistaPodcasts/imatgePodcast5.jpg','Viatges i cultura');
+
+INSERT INTO LListaPodcasts (nomProducte,Preu,imatgePodcast,temaPodcast) 
+VALUES ('Podcast n6','10.00','/imatgesPerPantalles/imatgesLlistaPodcasts/imatgePodcast6.jpg','Carrera en atronomia');
+
+INSERT INTO LListaPodcasts (nomProducte,Preu,imatgePodcast,temaPodcast) 
+VALUES ('Podcast n7','4.99','/imatgesPerPantalles/imatgesLlistaPodcasts/imatgePodcast7.jpg','Telecomunicacions');
+
+INSERT INTO LListaPodcasts (nomProducte,Preu,imatgePodcast,temaPodcast) 
+VALUES ('Podcast n8','0.00','/imatgesPerPantalles/imatgesLlistaPodcasts/imatgePodcast8.jpg','Experiències');

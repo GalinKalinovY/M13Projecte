@@ -12,11 +12,11 @@ CREATE TABLE LListaPodcasts (
 
 CREATE TABLE Podcast (
 	id INT NOT NULL AUTO_INCREMENT,
-	format VARCHAR(5),
-	nomProducte VARCHAR(20) NOT NULL,
-	descripcio VARCHAR(40) NOT NULL,
+	format VARCHAR(255),
+	nomProducte VARCHAR(40) NOT NULL,
+	descripcio VARCHAR(255) NOT NULL,
 	preu FLOAT NOT NULL,
-	imatgeProducte VARCHAR(40),
+	imatgeProducte VARCHAR(255),
 	PRIMARY KEY (id),
 	FOREIGN KEY (id) REFERENCES LListaPodcasts(id) ON DELETE CASCADE
 ) ENGINE = INNODB;
@@ -36,6 +36,18 @@ CREATE TABLE Cistella (
 	preu FLOAT,
 	quantitat INT,
 	PRIMARY KEY(idCistella)
+) ENGINE = INNODB;
+
+CREATE TABLE podcastPersonal (
+	id INT NOT NULL AUTO_INCREMENT,
+	idUsuari int not null,
+	format VARCHAR(255),
+	nomProducte VARCHAR(40) NOT NULL,
+	descripcio VARCHAR(255) NOT NULL,
+	preu FLOAT NOT NULL,
+	imatgeProducte VARCHAR(255),
+	PRIMARY KEY (id),
+	FOREIGN KEY (idUsuari) REFERENCES Usuaris(idUsuari) ON DELETE CASCADE
 ) ENGINE = INNODB;
 
 CREATE TABLE Usuaris (

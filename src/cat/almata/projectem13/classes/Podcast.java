@@ -69,5 +69,14 @@ public class Podcast implements Serializable{
 	public void transmetreEnViu() {
 		
 	}
+
+	@Override
+	public String toString() {
+		return "Podcast [id=" + id + ", format=" + format + ", nom=" + nom + ", descripcio=" + descripcio + ", preu="
+				+ preu + ", imatge=" + imatge + "]";
+	}
+	
+	
+	
 	
 }
